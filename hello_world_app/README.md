@@ -60,4 +60,4 @@ El botón azul permite devolver el valor a `0` desde cualquier estado.
 
 ## Liga
 
-[Arquitectura]()
+[Arquitectura](/hello_world_app/architecture/index.html)

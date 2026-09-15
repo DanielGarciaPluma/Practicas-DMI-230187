@@ -1,17 +1,63 @@
-# hello_world_app
+# Práctica No. 2: Mi Primera Aplicación Móvil con Flutter
 
-A new Flutter project.
+## Descripción
 
-## Getting Started
+Se desarrolló una aplicación móvil sencilla con Flutter que muestra un contador interactivo llamado “Counter Functions”. La interfaz presenta un valor numérico grande, un texto descriptivo (“Click” o “Clicks”) y tres botones circulares para reiniciar, sumar y restar.
 
-This project is a starting point for a Flutter application.
+## Actividades realizadas
 
-A few resources to get you started if this is your first Flutter project:
+- Creación del proyecto móvil con Flutter.
+- Implementación de una pantalla con un `StatefulWidget` para manejar el estado del contador.
+- Diseño de la interfaz principal con el título “Counter Functions”.
+- Agregado de un botón azul para reiniciar el valor a `0`.
+- Agregado de un botón verde para incrementar el contador en uno.
+- Agregado de un botón rojo para decrementar el contador en uno.
+- Cambio de color del número según su valor: azul en cero, verde en positivos y rojo en negativos.
+- Ajuste del texto para mostrar “Click” en singular y “Clicks” en plural.
+- Aplicación de un estilo visual con botones redondeados y un diseño tipo vista móvil.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Objetivos
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Conocer la estructura básica de un proyecto Flutter.
+- Comprender el uso de widgets con estado.
+- Practicar la actualización de la interfaz con `setState`.
+- Implementar interacción con eventos de usuario.
+- Aprender a modificar estilos y textos según la lógica del contador.
+
+## Resultados
+
+La aplicación funciona como un contador de clics y permite visualizar los siguientes estados:
+
+### Contador en cero
+
+Cuando el valor es `0`, el número aparece en color azul y el texto indica “Clicks”.
+
+![Contador en cero](images/0.jpeg)
+
+### Contador en uno
+
+Al presionar el botón de incremento, el contador cambia a `1`, el número se vuelve verde y el texto cambia a “Click”.
+
+![Contador en uno](images/1.jpeg)
+
+### Contador en menos uno
+
+Al presionar el botón de decremento, el valor cambia a `-1`, el número se muestra en color rojo y el texto indica “Clicks”.
+
+![Contador en menos uno](images/-1.jpeg)
+
+### Contador en siete
+
+Al seguir incrementando, el valor puede llegar a `7`, manteniendo el color verde y el texto en plural.
+
+![Contador en siete](images/7.jpeg)
+
+### Reinicio del contador
+
+El botón azul permite devolver el valor a `0` desde cualquier estado.
+
+![Reinicio del contador](images/reset.jpeg)
+
+## Liga
+
+[Arquitectura](/hello_world_app/architecture/index.html)

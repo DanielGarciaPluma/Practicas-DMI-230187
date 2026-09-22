@@ -70,4 +70,4 @@ El botón azul permite devolver el valor a `0` desde cualquier estado.
 
 ## Liga
 
-[Arquitectura](/Practica_02/hello_world_app/architecture/index.html)
+[Arquitectura](https://danielgarciapluma.github.io/Practicas-DMI-230187/Practica_02/hello_world_app/architecture/index.html)

@@ -32,32 +32,42 @@ La aplicación funciona como un contador de clics y permite visualizar los sigui
 
 Cuando el valor es `0`, el número aparece en color azul y el texto indica “Clicks”.
 
-![Contador en cero](images/0.jpeg)
+<div align="center">
+  <img src="images/0.jpeg" alt="Contador en cero" width="180">
+</div>
 
 ### Contador en uno
 
 Al presionar el botón de incremento, el contador cambia a `1`, el número se vuelve verde y el texto cambia a “Click”.
 
-![Contador en uno](images/1.jpeg)
+<div align="center">
+  <img src="images/1.jpeg" alt="Contador en uno" width="180">
+</div>
 
 ### Contador en menos uno
 
 Al presionar el botón de decremento, el valor cambia a `-1`, el número se muestra en color rojo y el texto indica “Clicks”.
 
-![Contador en menos uno](images/-1.jpeg)
+<div align="center">
+  <img src="images/-1.jpeg" alt="Contador en menos uno" width="180">
+</div>
 
 ### Contador en siete
 
 Al seguir incrementando, el valor puede llegar a `7`, manteniendo el color verde y el texto en plural.
 
-![Contador en siete](images/7.jpeg)
+<div align="center">
+  <img src="images/7.jpeg" alt="Contador en siete" width="180">
+</div>
 
 ### Reinicio del contador
 
 El botón azul permite devolver el valor a `0` desde cualquier estado.
 
-![Reinicio del contador](images/reset.jpeg)
+<div align="center">
+  <img src="images/reset.jpeg" alt="Reinicio del contador" width="180">
+</div>
 
 ## Liga
 
-[Arquitectura](/hello_world_app/architecture/index.html)
+[Arquitectura](/Practica_02/hello_world_app/architecture/index.html)

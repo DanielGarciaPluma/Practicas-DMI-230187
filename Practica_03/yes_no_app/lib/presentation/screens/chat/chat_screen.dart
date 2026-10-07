@@ -21,7 +21,7 @@ class ChatScreen extends StatelessWidget {
                 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Minecraft-creeper-face.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original'),
           ),
         ),
-        title: const Text('Minecraft Creeper'),
+        title: const Text('Creeper'),
         centerTitle: false,
       ),
       body: _ChatView(),
@@ -46,7 +46,7 @@ class _ChatView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final message = chatProvider.messageList[index];
                        
-                      return (message.fromWho == FromWho.her)
+                      return (message.fromWho == FromWho.hers)
                           ? HerMessageBubble( message: message )
                           : MyMessageBubble( message: message );
                     })),

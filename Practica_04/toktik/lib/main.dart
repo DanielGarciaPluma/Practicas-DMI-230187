@@ -1,3 +1,6 @@
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -119,6 +122,16 @@ class TokTikApp extends StatefulWidget {
 
 class _TokTikAppState extends State<TokTikApp> {
   bool _showSplash = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        unawaited(context.read<SeasonProvider>().syncAppIcon());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

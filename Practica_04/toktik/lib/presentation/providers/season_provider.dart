@@ -6,28 +6,42 @@ import 'package:toktik/domain/datasources/video_post_local_store.dart';
 class SeasonProvider extends ChangeNotifier {
   SeasonProvider({required this.localStore});
 
-  static const _appIconChannel = MethodChannel('com.example.toktik/app_icon');
+  static const _appIconChannel = MethodChannel(
+    'com.example.toktik/app_icon',
+  );
 
   final VideoPostLocalStore localStore;
+
   AppSeason? _seasonOverride;
   DateTime? _forcedDate;
 
   AppSeason get season =>
       _seasonOverride ?? AppTheme.seasonForDate(_forcedDate ?? DateTime.now());
+
   AppSeason? get seasonOverride => _seasonOverride;
+
   DateTime? get forcedDate => _forcedDate;
 
   Future<void> load() async {
     final preferences = await localStore.getSeasonPreferences();
     final seasonOverride = _seasonFromName(preferences.seasonOverride);
+
     if (preferences.seasonOverride != null && seasonOverride == null) {
       throw FormatException(
         'Stored season override is invalid: ${preferences.seasonOverride}',
       );
     }
+
     _seasonOverride = seasonOverride;
     _forcedDate = preferences.forcedDate;
+
     notifyListeners();
+
+    // Sincronizar el icono con la temporada actual al iniciar.
+    await syncAppIcon();
+  }
+
+  Future<void> syncAppIcon() async {
     try {
       await _syncAndroidAppIcon(season);
     } on PlatformException catch (error, stackTrace) {
@@ -46,10 +60,14 @@ class SeasonProvider extends ChangeNotifier {
       seasonOverride: season?.name,
       forcedDate: _forcedDate,
     );
+
     await localStore.saveSeasonPreferences(updated);
+
     _seasonOverride = season;
     notifyListeners();
-    await _syncAndroidAppIcon(this.season);
+
+    // Sincronizar el icono manejando posibles errores.
+    await syncAppIcon();
   }
 
   Future<void> selectDate(DateTime? date) async {
@@ -59,32 +77,49 @@ class SeasonProvider extends ChangeNotifier {
           ? null
           : DateTime(date.year, date.month, date.day),
     );
+
     await localStore.saveSeasonPreferences(updated);
+
     _forcedDate = updated.forcedDate;
     notifyListeners();
-    await _syncAndroidAppIcon(season);
+
+    // Sincronizar el icono manejando posibles errores.
+    await syncAppIcon();
   }
 
   Future<void> reset() async {
-    await localStore.saveSeasonPreferences(const SeasonPreferences());
+    await localStore.saveSeasonPreferences(
+      const SeasonPreferences(),
+    );
+
     _seasonOverride = null;
     _forcedDate = null;
     notifyListeners();
-    await _syncAndroidAppIcon(season);
+
+    // Restaurar el icono correspondiente a la fecha actual.
+    await syncAppIcon();
   }
 
   Future<void> _syncAndroidAppIcon(AppSeason season) async {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) return;
-    await _appIconChannel.invokeMethod<void>('setSeasonIcon', {
-      'season': season.name,
-    });
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
+      return;
+    }
+
+    await _appIconChannel.invokeMethod<void>(
+      'setSeasonIcon',
+      {'season': season.name},
+    );
   }
 
   AppSeason? _seasonFromName(String? name) {
     if (name == null) return null;
+
     for (final season in AppSeason.values) {
-      if (season.name == name) return season;
+      if (season.name == name) {
+        return season;
+      }
     }
+
     return null;
   }
 }

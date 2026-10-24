@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TokTik | Clean Architecture",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1380,
+      700
+    ],
+    "repository": {
+      "url": "https://github.com/Brisgregorio/Practicas_DMI_230362_BNGG",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "6e708838a753d171d5789dfdadf7f3769268e618"
+    },
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "discover-screen",
+      "type": "frontend",
+      "label": "DiscoverScreen",
+      "sublabel": "4 feeds | selector de temporada",
+      "tag": "PRESENTACION | UI",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/screens/discover/discover_screen.dart",
+          "label": "Pantalla"
+        }
+      ],
+      "pos": [
+        60,
+        60
+      ],
+      "size": [
+        300,
+        130
+      ]
+    },
+    {
+      "id": "video-feed-player",
+      "type": "frontend",
+      "label": "Video feed + player",
+      "sublabel": "PageView.builder | refresh | video y descripcion",
+      "tag": "PRESENTACION | REPRODUCCION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/shared/video_scrollable_view.dart",
+          "label": "Feed vertical"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/video/fullscreen_player.dart",
+          "label": "Reproductor"
+        }
+      ],
+      "pos": [
+        400,
+        60
+      ],
+      "size": [
+        360,
+        130
+      ]
+    },
+    {
+      "id": "video-interactions",
+      "type": "frontend",
+      "label": "Favoritos e interacciones",
+      "sublabel": "Likes | vistas | mute | navegacion seasonal",
+      "tag": "PRESENTACION | CONTROLES",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/shared/video_buttons.dart",
+          "label": "Controles"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/favorites/favorites_view.dart",
+          "label": "Favoritos"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/shared/seasonal_bottom_navigation.dart",
+          "label": "Navegacion"
+        }
+      ],
+      "pos": [
+        800,
+        60
+      ],
+      "size": [
+        360,
+        130
+      ]
+    },
+    {
+      "id": "discover-provider",
+      "type": "backend",
+      "label": "DiscoverProvider",
+      "sublabel": "ChangeNotifier | 4 feeds | primera pieza con 0 likes/vistas",
+      "tag": "ESTADO | ORQUESTACION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/providers/discover_provider.dart",
+          "label": "Proveedor"
+        }
+      ],
+      "pos": [
+        480,
+        230
+      ],
+      "size": [
+        420,
+        130
+      ]
+    },
+    {
+      "id": "domain-core",
+      "type": "database",
+      "label": "Dominio | entidades y contratos",
+      "sublabel": "VideoPost | VideoPostRepository | VideoPostDatasource",
+      "tag": "DOMAIN | NUCLEO",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/domain/entities/video_post.dart",
+          "label": "Entidad"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/domain/repositories/video_posts_repository.dart",
+          "label": "Contrato repositorio"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/domain/datasources/video_posts_datasource.dart",
+          "label": "Contrato datasource"
+        }
+      ],
+      "pos": [
+        480,
+        390
+      ],
+      "size": [
+        420,
+        130
+      ]
+    },
+    {
+      "id": "external-cdns",
+      "type": "external",
+      "label": "CDN y APIs de video",
+      "sublabel": "Cloudinary | Pixabay | Pexels",
+      "tag": "SERVICIOS EXTERNOS",
+      "pos": [
+        60,
+        390
+      ],
+      "size": [
+        360,
+        130
+      ]
+    },
+    {
+      "id": "season-config",
+      "type": "security",
+      "label": "SeasonConfig + AppTheme",
+      "sublabel": "Temporadas | audio | icono Android | tema oscuro",
+      "tag": "CONFIGURACION | TEMPORADAS",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/config/theme/season_config.dart",
+          "label": "Motor de temporadas"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/config/theme/app_theme.dart",
+          "label": "Tema visual"
+        }
+      ],
+      "pos": [
+        950,
+        390
+      ],
+      "size": [
+        360,
+        130
+      ]
+    },
+    {
+      "id": "datasource-adapters",
+      "type": "backend",
+      "label": "Adaptadores de video",
+      "sublabel": "Cloudinary | Pixabay | Pexels | fallback de catalogo",
+      "tag": "INFRAESTRUCTURA | DATASOURCES",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/datasources/cloudinary_video_datasource_impl.dart",
+          "label": "Cloudinary"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/datasources/pixabay_video_datasource_impl.dart",
+          "label": "Pixabay"
+        },
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/datasources/pexels_video_datasource_impl.dart",
+          "label": "Pexels"
+        }
+      ],
+      "pos": [
+        40,
+        550
+      ],
+      "size": [
+        400,
+        130
+      ]
+    },
+    {
+      "id": "repository-impl",
+      "type": "backend",
+      "label": "VideoPostsRepositoryImpl",
+      "sublabel": "Implementa VideoPostRepository | inyecta VideoPostDatasource",
+      "tag": "INFRAESTRUCTURA | REPOSITORIO",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/repositories/video_posts_repository_impl.dart",
+          "label": "Implementacion"
+        }
+      ],
+      "pos": [
+        480,
+        550
+      ],
+      "size": [
+        420,
+        130
+      ]
+    },
+    {
+      "id": "local-storage",
+      "type": "database",
+      "label": "Storage local + modelos",
+      "sublabel": "SharedPreferences | JSON -> VideoPost | likes <= views < 1000",
+      "tag": "INFRAESTRUCTURA | STORAGE Y MAPPER",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/models/local_video_model.dart",
+          "label": "Mapper JSON"
+        }
+      ],
+      "pos": [
+        920,
+        550
+      ],
+      "size": [
+        420,
+        130
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACION | UI",
+      "wraps": [
+        "discover-screen",
+        "video-feed-player",
+        "video-interactions"
+      ],
+      "pad": 5
+    },
+    {
+      "kind": "region",
+      "label": "ESTADO",
+      "wraps": [
+        "discover-provider"
+      ],
+      "pad": 5
+    },
+    {
+      "kind": "region",
+      "label": "DOMINIO | CORE SIN DEPENDENCIAS EXTERNAS",
+      "wraps": [
+        "domain-core"
+      ],
+      "pad": 5
+    },
+    {
+      "kind": "region",
+      "label": "INFRAESTRUCTURA | ADAPTADORES Y PERSISTENCIA",
+      "wraps": [
+        "datasource-adapters",
+        "repository-impl",
+        "local-storage"
+      ],
+      "pad": 15
+    },
+    {
+      "kind": "region",
+      "label": "CONFIGURACION",
+      "wraps": [
+        "season-config"
+      ],
+      "pad": 5
+    },
+    {
+      "kind": "region",
+      "label": "SERVICIOS EXTERNOS",
+      "wraps": [
+        "external-cdns"
+      ],
+      "pad": 15
+    }
+  ],
+  "connections": [
+    {
+      "id": "screen-feed",
+      "from": "discover-screen",
+      "to": "video-feed-player"
+    },
+    {
+      "id": "feed-state",
+      "from": "video-feed-player",
+      "to": "discover-provider",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          580,
+          215
+        ],
+        [
+          690,
+          215
+        ]
+      ]
+    },
+    {
+      "id": "state-contract",
+      "from": "discover-provider",
+      "to": "domain-core",
+      "variant": "emphasis"
+    },
+    {
+      "id": "contract-implementation",
+      "from": "domain-core",
+      "to": "repository-impl"
+    },
+    {
+      "id": "repository-datasource",
+      "from": "repository-impl",
+      "to": "datasource-adapters",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "datasource-api",
+      "from": "datasource-adapters",
+      "to": "external-cdns",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [],
+      "route": "straight"
+    },
+    {
+      "id": "provider-storage",
+      "from": "discover-provider",
+      "to": "local-storage",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "top",
+      "via": [
+        [
+          920,
+          295
+        ],
+        [
+          920,
+          530
+        ],
+        [
+          1130,
+          530
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Presentacion y estado",
+      "items": [
+        "DiscoverScreen: 4 feeds + selector seasonal; feed con PageView.builder y refresh.",
+        "Player: play/pause + caption expandible (110 px). Controles: likes, vistas, mute; favoritos.",
+        "Provider: loadNextPage(), refreshFeed(), loadMoreForSection(), toggleLike(); primer video 0/0."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Clean Architecture y datos",
+      "items": [
+        "VideoPost: campos id a isLiked; copyWith(), toJson(), fromJson().",
+        "Contratos: getTrendingVideosByPage(page) y getFavoriteVideosByUser(userID); RepositoryImpl inyecta datasource.",
+        "Cloudinary, Pixabay y Pexels + fallback; metricas likes <= views < 1000.",
+        "SharedPreferences + LocalVideoModel(JSON); SeasonConfig audio/icono; AppTheme oscuro.",
+        "getFavoriteVideosByUser() TODO; LocalStorageService y RandomVideoMetrics no estan versionados en Practica04."
+      ]
+    }
+  ]
+}

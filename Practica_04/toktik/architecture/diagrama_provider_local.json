@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TokTik | Provider local acoplado",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1380,
+      700
+    ],
+    "repository": {
+      "url": "https://github.com/Brisgregorio/Practicas_DMI_230362_BNGG",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "6e708838a753d171d5789dfdadf7f3769268e618"
+    }
+  },
+  "components": [
+    {
+      "id": "discover-screen",
+      "type": "frontend",
+      "label": "DiscoverScreen",
+      "sublabel": "Scaffold",
+      "tag": "UI | PRESENTACION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/screens/discover/discover_screen.dart",
+          "label": "Pantalla"
+        }
+      ],
+      "pos": [
+        80,
+        160
+      ],
+      "size": [
+        250,
+        112
+      ]
+    },
+    {
+      "id": "scrollable-view",
+      "type": "frontend",
+      "label": "VideoScrollableView",
+      "sublabel": "PageView vertical | swipe",
+      "tag": "UI | PRESENTACION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/shared/video_scrollable_view.dart",
+          "label": "PageView"
+        }
+      ],
+      "pos": [
+        390,
+        160
+      ],
+      "size": [
+        250,
+        112
+      ]
+    },
+    {
+      "id": "fullscreen-player",
+      "type": "frontend",
+      "label": "FullScreenPlayer",
+      "sublabel": "Controlador directo de video",
+      "tag": "UI | PRESENTACION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/video/fullscreen_player.dart",
+          "label": "Player"
+        }
+      ],
+      "pos": [
+        390,
+        420
+      ],
+      "size": [
+        250,
+        112
+      ]
+    },
+    {
+      "id": "video-buttons",
+      "type": "frontend",
+      "label": "VideoButtons",
+      "sublabel": "Likes | vistas",
+      "tag": "UI | PRESENTACION",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/widgets/shared/video_buttons.dart",
+          "label": "Controles"
+        }
+      ],
+      "pos": [
+        670,
+        420
+      ],
+      "size": [
+        250,
+        112
+      ]
+    },
+    {
+      "id": "discover-provider",
+      "type": "backend",
+      "label": "DiscoverProvider",
+      "sublabel": "ChangeNotifier | lista y paginacion",
+      "tag": "ESTADO | PROVIDER",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/presentation/providers/discover_provider.dart",
+          "label": "Estado local"
+        }
+      ],
+      "pos": [
+        720,
+        160
+      ],
+      "size": [
+        300,
+        132
+      ]
+    },
+    {
+      "id": "local-posts",
+      "type": "database",
+      "label": "local_video_posts.dart",
+      "sublabel": "Lista estatica | mapas hardcoded",
+      "tag": "DATOS LOCALES",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/shared/data/local_video_posts.dart",
+          "label": "Fuente estatica"
+        }
+      ],
+      "pos": [
+        1080,
+        160
+      ],
+      "size": [
+        260,
+        112
+      ]
+    },
+    {
+      "id": "local-model",
+      "type": "database",
+      "label": "LocalVideoModel",
+      "sublabel": "Map a modelo consumible | mapper directo",
+      "tag": "DATOS LOCALES",
+      "sources": [
+        {
+          "path": "Practica_04/tok_tik/lib/infrastructure/models/local_video_model.dart",
+          "label": "Mapper"
+        }
+      ],
+      "pos": [
+        1080,
+        420
+      ],
+      "size": [
+        260,
+        112
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "PRESENTACION | UI",
+      "wraps": [
+        "discover-screen",
+        "scrollable-view",
+        "fullscreen-player",
+        "video-buttons"
+      ],
+      "pad": 36
+    },
+    {
+      "kind": "region",
+      "label": "ESTADO | DEPENDENCIA DIRECTA",
+      "wraps": [
+        "discover-provider"
+      ],
+      "pad": 36
+    },
+    {
+      "kind": "region",
+      "label": "DATOS LOCALES | SIN CONTRATO",
+      "wraps": [
+        "local-posts",
+        "local-model"
+      ],
+      "pad": 36
+    }
+  ],
+  "connections": [
+    {
+      "id": "screen-scroll",
+      "from": "discover-screen",
+      "to": "scrollable-view"
+    },
+    {
+      "id": "view-provider",
+      "from": "scrollable-view",
+      "to": "discover-provider",
+      "label": "watch() | swipe carga pagina",
+      "variant": "emphasis",
+      "labelAt": [
+        700,
+        300
+      ]
+    },
+    {
+      "id": "view-player",
+      "from": "scrollable-view",
+      "to": "fullscreen-player"
+    },
+    {
+      "id": "provider-posts",
+      "from": "discover-provider",
+      "to": "local-posts",
+      "variant": "security",
+      "label": ""
+    },
+    {
+      "id": "posts-model",
+      "from": "local-posts",
+      "to": "local-model"
+    },
+    {
+      "id": "provider-model",
+      "from": "discover-provider",
+      "to": "local-model",
+      "label": "instancia modelo directamente",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          870,
+          340
+        ],
+        [
+          1060,
+          340
+        ],
+        [
+          1060,
+          570
+        ],
+        [
+          1210,
+          570
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Acoplamiento estrecho",
+      "items": [
+        "DiscoverProvider conoce la fuente y el mapper concretos.",
+        "Sin contrato de repositorio: se viola Dependency Inversion Principle."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Flujo de estado",
+      "items": [
+        "Swipe vertical -> cargar pagina local -> notifyListeners().",
+        "La UI observa cambios con context.watch()."
+      ]
+    }
+  ]
+}

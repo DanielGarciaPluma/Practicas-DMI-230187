@@ -82,6 +82,12 @@ Consulta la [documentación complementaria](DOCUMENTACION.md) y las [instruccion
 
 ## Evidencias de funcionamiento
 
+### Recorrido en video
+
+Este video muestra un recorrido de TokTik ejecutándose en Appetize.io: se observan la interfaz, los feeds de videos y algunas de las opciones e interacciones disponibles en la aplicación.
+
+[Ver el recorrido de TokTik en Google Drive](https://drive.google.com/file/d/1wYGaJZ3FLcfDpEbP68WmoaxoAsabzBcR/view?usp=sharing)
+
 ### Capturas recomendadas para Appetize.io
 
 Las siguientes capturas de Appetize.io documentan el inicio de la aplicación, los feeds, las fuentes de video, los temas de temporada y las interacciones. Se guardan en **assets/Appetize/** como evidencias de la práctica; no son recursos de ejecución de la app.
@@ -180,7 +186,7 @@ Las siguientes capturas de Appetize.io documentan el inicio de la aplicación, l
 - No hay videos MP4 en el checkout. Aunque pubspec.yaml declara assets/videos/ y local_video_posts.dart referencia ocho archivos, esos recursos no están presentes. La aplicación principal inicializa feeds remotos; su reproducción depende de la conexión y de que las URLs de ejemplo sigan disponibles.
 - Pixabay y Pexels admiten una clave API opcional, pero main.dart crea esos datasources sin pasarla; en esa configuración usan sus catálogos de ejemplo. No se encontraron claves API en la configuración de inicio inspeccionada.
 - El enlace de Appetize depende de que la aplicación siga disponible y de los permisos de acceso de la cuenta o compilación.
-- No se modificaron ni verificaron desde este trabajo las grabaciones enlazadas en Google Drive; las capturas anteriores son la evidencia visual incluida directamente en este README.
+- La disponibilidad del video en Google Drive depende de los permisos de acceso configurados para el enlace.
 
 ## Autor
 

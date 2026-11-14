@@ -42,7 +42,7 @@ Cada práctica incluye el código fuente, una breve descripción del objetivo de
 
 | Información de la Materia | Datos del Estudiante |
 |:--|:--|
-| <table><tr><th>Campo</th><th>Detalle</th></tr><tr><td><b>Materia</b></td><td>Desarollo Movil Integral</td></tr><tr><td><b>Carrera</b></td><td>Ingeniería en Desarrollo y Gestión de Software</td></tr><tr><td><b>Docente</b></td><td>M.T.I. Marco A. Ramírez Hernández</td></tr><tr><td><b>Periodo</b></td><td>Septiembre - Diciembre</td></tr></table> | <table><tr><th>Campo</th><th>Detalle</th></tr><tr><td><b>Nombre</b></td><td>Jose Francisco Flores Amador</td></tr><tr><td><b>Matrícula</b></td><td>230417</td></tr><tr><td><b>Grupo</b></td><td>10 A°</td></tr><tr><td><b>Correo</b></td><td>230417@utxicotepec.edu.mx</td></tr></table> |
+| <table><tr><th>Campo</th><th>Detalle</th></tr><tr><td><b>Materia</b></td><td>Desarrollo Móvil Integral</td></tr><tr><td><b>Carrera</b></td><td>Ingeniería en Desarrollo y Gestión de Software</td></tr><tr><td><b>Docente</b></td><td>M.T.I. Marco A. Ramírez Hernández</td></tr><tr><td><b>Periodo</b></td><td>Septiembre - Diciembre</td></tr></table> | <table><tr><th>Campo</th><th>Detalle</th></tr><tr><td><b>Nombre</b></td><td>Carlos Daniel Garcia Pluma</td></tr><tr><td><b>Matrícula</b></td><td>230187</td></tr><tr><td><b>Grupo</b></td><td>10-A</td></tr><tr><td><b>Correo</b></td><td>230187@utxicotepec.edu.mx</td></tr></table> |
 
 
 ## Tabla de Prácticas de la Materia

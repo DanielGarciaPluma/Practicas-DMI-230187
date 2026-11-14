@@ -113,6 +113,12 @@ El proyecto separa configuración y presentación:
 - **Estado:** Riverpod gestiona el contador y las preferencias del tema.
 - **Recursos:** `lib/assets/images/` contiene imágenes locales usadas por la aplicación.
 
+### Diagrama interactivo
+
+[Ver diagrama de arquitectura de Widgets App](https://danielgarciapluma.github.io/Practicas-DMI-230187/Practica_05/widgets_app/architecture/index.html).
+
+El archivo del diagrama está en [`architecture/index.html`](./architecture/index.html). Para que el enlace de GitHub Pages esté disponible, hay que habilitar y publicar Pages para este repositorio.
+
 ## Instalación y ejecución
 
 Se requiere Flutter instalado y un dispositivo o emulador configurado. Desde la raíz del repositorio, ejecuta:

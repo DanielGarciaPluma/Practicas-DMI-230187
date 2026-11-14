@@ -119,6 +119,16 @@ El proyecto separa configuración y presentación:
 
 El archivo del diagrama está en [`architecture/index.html`](./architecture/index.html). Para que el enlace de GitHub Pages esté disponible, hay que habilitar y publicar Pages para este repositorio.
 
+### Probar en Appetize.io
+
+Para generar y compartir una demo Android de Widgets App:
+
+1. Desde `Practica_05\widgets_app`, ejecuta `flutter pub get` y `flutter build apk --debug`.
+2. Sube `build\app\outputs\flutter-apk\app-debug.apk` en [Appetize.io](https://appetize.io/app/b_pwxaon2nzusc6gw7rsfwphmaoa).
+3. Cuando termine de procesarse, abre la compilación en Appetize y usa **Share** para obtener el enlace de la demo.
+
+El enlace de Appetize de Widgets App se puede agregar aquí después de subir el APK. Los enlaces existentes de Appetize en otras prácticas corresponden a aplicaciones distintas.
+
 ## Instalación y ejecución
 
 Se requiere Flutter instalado y un dispositivo o emulador configurado. Desde la raíz del repositorio, ejecuta:

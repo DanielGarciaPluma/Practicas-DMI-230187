@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020">
+<title>Arquitectura de Widgets App</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#11182a;--line:#27334a;--text:#edf2ff;--muted:#9ba8bd;--cyan:#59d6d2;--blue:#77a9ff;--violet:#aa94ff;--amber:#f6be69;--green:#8cdbab;--rose:#f18ca9}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 55% -30%,#1b2945 0,transparent 54%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.page{max-width:1680px;margin:auto;padding:30px clamp(16px,3vw,44px) 22px}.head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:16px}.eyebrow{font:600 11px ui-monospace,monospace;color:var(--cyan);letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(25px,3.4vw,36px);line-height:1.1;letter-spacing:-.04em;margin:7px 0}.subtitle{margin:0;color:var(--muted)}.identity{text-align:right;color:#adb8ca;font-size:12px;white-space:nowrap}.identity strong{display:block;color:var(--text);font-size:13px}.toolbar{display:flex;justify-content:space-between;align-items:center;margin:12px 2px 9px;color:var(--muted);font-size:11px}.tools{display:flex;align-items:center;gap:6px}.tools button{width:30px;height:28px;border:1px solid #2a3650;border-radius:7px;background:#141e31;color:#e5ecfa;font-size:15px;cursor:pointer}.tools button:hover{background:#202c43}.scale{min-width:42px;text-align:center;font:11px ui-monospace,monospace}.board{height:min(66vh,780px);min-height:480px;overflow:hidden;position:relative;border:1px solid #26334a;border-radius:13px;background:#0e1525 radial-gradient(#27334a 1px,transparent 1px);background-size:auto,22px 22px;box-shadow:0 18px 58px #0004;touch-action:none}.diagram{display:block;width:100%;height:100%;cursor:grab;user-select:none}.diagram.dragging{cursor:grabbing}.edge{fill:none;stroke:#64718a;stroke-width:1.45;marker-end:url(#arrow);vector-effect:non-scaling-stroke}.edge.em{stroke:#9c8cff;stroke-width:1.9}.edge.dashed{stroke-dasharray:5 5}.edge-label{fill:#aab6ca;font:9px ui-monospace,monospace}.group{fill:#111b2b77;stroke:#30405a;stroke-width:1;stroke-dasharray:5 5}.group-title{fill:#8795ab;font:600 11px ui-monospace,monospace;letter-spacing:.08em}.node{cursor:pointer}.node rect{stroke-width:1.25;rx:9}.node text{pointer-events:none}.node .title{font:600 12px ui-monospace,monospace;fill:#eff3ff}.node .sub{font:10px ui-monospace,monospace;fill:#a8b5c9}.node .detail{font:9px ui-monospace,monospace;fill:#c6d0df}.node:hover rect,.node:focus rect{filter:brightness(1.22);stroke-width:2}.cloud rect{fill:#25283a;stroke:var(--blue)}.frontend rect{fill:#1d243a;stroke:var(--violet)}.config rect{fill:#30291f;stroke:var(--amber)}.state rect{fill:#172d2d;stroke:var(--green)}.resource rect{fill:#25283a;stroke:var(--blue)}.platform rect{fill:#202b36;stroke:#aab7c8}.external rect{fill:#272634;stroke:#aab7c8}.legend{display:flex;align-items:center;flex-wrap:wrap;gap:15px;margin:12px 2px 0;color:#aeb9cb;font-size:10px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.note{margin:8px 2px 0;color:#75829a;font:10px ui-monospace,monospace}.hint{position:absolute;left:12px;bottom:10px;padding:5px 8px;border-radius:6px;background:#0b1020d9;color:#8391a8;font:9px ui-monospace,monospace;pointer-events:none}.tip{position:fixed;z-index:5;display:none;max-width:360px;padding:9px 11px;border:1px solid #36425b;border-radius:8px;background:#111a2c;color:#eaf0ff;box-shadow:0 10px 30px #0007;font-size:12px;pointer-events:none}.tip strong{display:block;font:600 12px ui-monospace,monospace;margin-bottom:4px}.tip small{color:#a5b2c6}@media(max-width:720px){.page{padding-top:22px}.head{display:block}.identity{text-align:left;margin-top:12px}.board{height:62vh;min-height:430px}.legend{gap:10px}.hint{display:none}}
+</style></head>
+<body><main class="page"><header class="head"><div><div class="eyebrow">Widgets App · Práctica 05</div><h1>Arquitectura integral de Widgets App</h1><p class="subtitle">Estructura, navegación, estado y ejecución de la aplicación móvil.</p></div><div class="identity"><strong>Carlos Daniel Garcia Pluma</strong>Matrícula 230187 · CDGP</div></header>
+<div class="toolbar"><span>Diagrama único · selecciona un nodo para ver su responsabilidad</span><div class="tools" aria-label="Controles del diagrama"><button id="minus" aria-label="Alejar">−</button><span id="scale" class="scale">100%</span><button id="plus" aria-label="Acercar">+</button><button id="fit" aria-label="Ajustar diagrama">↗</button></div></div>
+<section class="board" aria-label="Diagrama integral interactivo"><svg id="diagram" class="diagram" role="img" aria-label="Diagrama integral de arquitectura de Widgets App"></svg><div class="hint">RUEDA · ZOOM &nbsp; ARRASTRA · DESPLAZAR &nbsp; CLIC · DETALLES</div></section>
+<div class="legend"><span><i class="dot" style="background:#59d6d2"></i>Entrada / plataforma</span><span><i class="dot" style="background:#f6be69"></i>Configuración y navegación</span><span><i class="dot" style="background:#aa94ff"></i>Pantallas y presentación</span><span><i class="dot" style="background:#8cdbab"></i>Estado Riverpod / local</span><span><i class="dot" style="background:#77a9ff"></i>Recursos y paquetes</span><span>Flecha continua · flujo/dependencia &nbsp; Discontinua · recurso/dependencia externa</span></div>
+<p class="note">Activos en lib/assets/images; pubspec.yaml no registra actualmente la sección assets. Destinos mostrados según carpetas del proyecto.</p></main><div id="tip" class="tip" role="status"></div>
+<script>
+const d={
+  "w": 2400,
+  "h": 1350,
+  "groups": [
+    [
+      "g1",
+      "NIVEL 1 · ENTRADA",
+      35,
+      35,
+      2320,
+      150
+    ],
+    [
+      "g2",
+      "NIVEL 2 · CONFIGURACIÓN Y ESTADO",
+      35,
+      210,
+      2320,
+      180
+    ],
+    [
+      "g3",
+      "NIVEL 3 · NAVEGACIÓN Y MENÚ",
+      35,
+      390,
+      2320,
+      180
+    ],
+    [
+      "g4",
+      "NIVEL 4 · HOME Y PANTALLAS",
+      35,
+      585,
+      2320,
+      540
+    ],
+    [
+      "g5",
+      "NIVEL 5 · RECURSOS Y PLATAFORMAS",
+      35,
+      1130,
+      2320,
+      200
+    ]
+  ],
+  "nodes": [
+    [
+      "user",
+      "Usuario",
+      "interacción",
+      60,
+      70,
+      "external",
+      "Selecciona módulos desde HomeScreen"
+    ],
+    [
+      "widgetsApp",
+      "Widgets App",
+      "Flutter · Práctica 05 · BNGG",
+      390,
+      70,
+      "frontend",
+      "Aplicación móvil"
+    ],
+    [
+      "main",
+      "main()",
+      "lib/main.dart · runApp()",
+      720,
+      70,
+      "config",
+      "Inyecta ProviderScope con MainApp"
+    ],
+    [
+      "scope",
+      "ProviderScope",
+      "contenedor Riverpod",
+      1050,
+      70,
+      "state",
+      "Envuelve MainApp y habilita ConsumerWidget"
+    ],
+    [
+      "mainApp",
+      "MainApp",
+      "ConsumerWidget · build()",
+      1380,
+      70,
+      "frontend",
+      "ref.watch(themeNotifierProvider) → MaterialApp.router"
+    ],
+    [
+      "material",
+      "MaterialApp.router",
+      "routerConfig · theme",
+      1710,
+      70,
+      "frontend",
+      "appTheme.getTheme() · Material Design 3"
+    ],
+    [
+      "home",
+      "HomeScreen",
+      "/ · home_screen",
+      1860,
+      405,
+      "frontend",
+      "_HomeView → _CustomListTile · context.push"
+    ],
+    [
+      "counter",
+      "CounterScreen",
+      "/counter-river · counter_screen",
+      60,
+      1000,
+      "frontend",
+      "ConsumerWidget · ref.watch() · ref.read() · counterProvider notifier.state++"
+    ],
+    [
+      "buttons",
+      "ButtonsScreen",
+      "/buttons · buttons_screen",
+      60,
+      620,
+      "frontend",
+      "ElevatedButton · FilledButton · OutlinedButton · TextButton · IconButton · CustomButton"
+    ],
+    [
+      "cards",
+      "CardsScreen",
+      "/cards · cards_screen",
+      420,
+      620,
+      "frontend",
+      "Card · _CardType1–4 · Image.network()"
+    ],
+    [
+      "progress",
+      "ProgressScreen",
+      "/progress · progress_screen",
+      780,
+      620,
+      "frontend",
+      "CircularProgressIndicator · LinearProgressIndicator · StreamBuilder"
+    ],
+    [
+      "snack",
+      "SnackbarScreen",
+      "/snackbars · snackbar_screen",
+      1140,
+      620,
+      "frontend",
+      "showCustomSnackbar() · SnackBar · openDialog() · AlertDialog"
+    ],
+    [
+      "animated",
+      "AnimatedScreen",
+      "/animated · animated_screen",
+      1860,
+      620,
+      "frontend",
+      "changeShape() · setState() · AnimatedContainer"
+    ],
+    [
+      "controls",
+      "UiControlsScreen",
+      "/ui-controls · ui_controls_screen",
+      60,
+      790,
+      "frontend",
+      "SwitchListTile · RadioListTile · CheckboxListTile · ExpansionTile · setState()"
+    ],
+    [
+      "tutorial",
+      "AppTutorialScreen",
+      "/tutorial · tutorial_screen",
+      420,
+      790,
+      "frontend",
+      "PageView · PageController · initState() · dispose() · FadeInRight"
+    ],
+    [
+      "infinite",
+      "InfiniteScrollScreen",
+      "/infinite · infinite_screen",
+      780,
+      790,
+      "frontend",
+      "ScrollController · ListView.builder · RefreshIndicator · FadeInImage · loadNextPage() · onRefresh()"
+    ],
+    [
+      "themeScreen",
+      "ThemeChangerScreen",
+      "/theme-changer · theme_changer_screen",
+      1500,
+      790,
+      "frontend",
+      "ref.watch() · toggleDarkmode() · changeColorIndex() · RadioListTile"
+    ],
+    [
+      "appRouter",
+      "GoRouter · appRouter",
+      "config/router/app_router.dart · initialLocation: / · 11 GoRoute",
+      2040,
+      70,
+      "config",
+      "Rutas: / · /buttons · /cards · /progress · /snackbars · /animated · /ui-controls · /tutorial · /infinite · /counter-river · /theme-changer"
+    ],
+    [
+      "themeP",
+      "themeNotifierProvider",
+      "StateNotifierProvider<ThemeNotifier, AppTheme>",
+      1500,
+      240,
+      "state",
+      "ConsumerWidget watches state; notifier methods update it"
+    ],
+    [
+      "notifier",
+      "ThemeNotifier",
+      "StateNotifier<AppTheme>",
+      1140,
+      240,
+      "state",
+      "toggleDarkmode() · changeColorIndex() · state.copyWith()"
+    ],
+    [
+      "appTheme",
+      "AppTheme",
+      "config/theme/app_theme.dart",
+      780,
+      240,
+      "config",
+      "getTheme() · copyWith() · selectedColor · isDarkmode"
+    ],
+    [
+      "themeData",
+      "ThemeData · ColorScheme",
+      "useMaterial3 · colorSchemeSeed · brightness",
+      420,
+      240,
+      "config",
+      "AppTheme.getTheme() supplies MaterialApp.router.theme"
+    ],
+    [
+      "extraProviders",
+      "Providers Riverpod",
+      "colorListProvider · isDarkmodeProvider · selectedColorProvider",
+      60,
+      240,
+      "state",
+      "Provider · StateProvider · selectedColorProvider sin uso activo"
+    ],
+    [
+      "counterP",
+      "counterProvider",
+      "StateProvider<int> · estado inicial 5",
+      420,
+      1000,
+      "state",
+      "CounterScreen reads notifier and increments state++"
+    ],
+    [
+      "homeMenu",
+      "MenuItem · appMenuItems",
+      "config/menu/menu_items.dart · 10 enlaces e iconos",
+      1140,
+      405,
+      "config",
+      "HomeScreen _CustomListTile usa context.push(menuItem.link)"
+    ],
+    [
+      "sideMenu",
+      "SideMenu",
+      "presentation/widgets/side_menu.dart · NavigationDrawer",
+      1500,
+      405,
+      "frontend",
+      "StatefulWidget · setState(navDrawerIndex) · context.push()"
+    ],
+    [
+      "images",
+      "Imágenes en el repositorio",
+      "lib/assets/images/1.png · 2.png · 3.png · jar-loading.gif",
+      420,
+      1180,
+      "cloud",
+      "Tutorial references assets/images/1.png … 3.png"
+    ],
+    [
+      "assetConfig",
+      "Registro Flutter assets",
+      "pubspec.yaml",
+      60,
+      1180,
+      "cloud",
+      "La sección assets está comentada; los archivos no están declarados"
+    ],
+    [
+      "remoteImages",
+      "Imágenes remotas · picsum.photos",
+      "CardsScreen: Image.network · InfiniteScrollScreen: NetworkImage",
+      780,
+      1180,
+      "external",
+      "Dependencia de red en tiempo de ejecución"
+    ],
+    [
+      "packages",
+      "Dependencias · pubspec.yaml",
+      "go_router · flutter_riverpod · animate_do · cupertino_icons",
+      1140,
+      1180,
+      "cloud",
+      "GoRouter ^18.0.2 · Riverpod ^2.6.1 · Animate Do ^5.1.0"
+    ],
+    [
+      "flutterDart",
+      "Flutter · Dart",
+      "Framework · lenguaje · motor de renderizado",
+      1500,
+      1180,
+      "external",
+      "SDK Dart ^3.13.3"
+    ],
+    [
+      "platforms",
+      "Plataformas del repositorio",
+      "Android · iOS · Web · Linux · macOS · Windows",
+      1860,
+      1180,
+      "external",
+      "Directorios/configuración presentes en el proyecto"
+    ]
+  ],
+  "edges": [
+    [
+      "user",
+      "widgetsApp",
+      "usa"
+    ],
+    [
+      "widgetsApp",
+      "main",
+      "main.dart"
+    ],
+    [
+      "main",
+      "scope",
+      "runApp"
+    ],
+    [
+      "scope",
+      "mainApp",
+      "provee estado"
+    ],
+    [
+      "mainApp",
+      "material",
+      "construye"
+    ],
+    [
+      "material",
+      "appRouter",
+      "routerConfig"
+    ],
+    [
+      "themeP",
+      "notifier",
+      "crea"
+    ],
+    [
+      "notifier",
+      "appTheme",
+      "actualiza AppTheme"
+    ],
+    [
+      "appTheme",
+      "themeData",
+      "getTheme()"
+    ],
+    [
+      "appRouter",
+      "home",
+      "ruta /"
+    ],
+    [
+      "home",
+      "sideMenu",
+      "abre NavigationDrawer"
+    ],
+    [
+      "homeMenu",
+      "sideMenu",
+      "destinos"
+    ],
+    [
+      "counter",
+      "counterP",
+      "watch/read · ++"
+    ],
+    [
+      "themeScreen",
+      "themeP",
+      "watch · notifier"
+    ],
+    [
+      "tutorial",
+      "images",
+      "AssetImage()"
+    ],
+    [
+      "infinite",
+      "images",
+      "placeholder"
+    ],
+    [
+      "infinite",
+      "remoteImages",
+      "NetworkImage()"
+    ],
+    [
+      "assetConfig",
+      "images",
+      "no declarados en pubspec"
+    ],
+    [
+      "flutterDart",
+      "platforms",
+      "targets"
+    ]
+  ]
+},NS='http://www.w3.org/2000/svg';
+const el=(tag,a={},text)=>{const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);if(text)e.textContent=text;return e};
+const svg=document.getElementById('diagram'),defs=el('defs'),marker=el('marker',{id:'arrow',viewBox:'0 0 10 10',refX:'8',refY:'5',markerWidth:'6',markerHeight:'6',orient:'auto'});marker.append(el('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'#8290a6'}));defs.append(marker);svg.append(defs);
+const world=el('g');svg.append(world);const groups=el('g'),edges=el('g'),nodesLayer=el('g');world.append(groups,edges,nodesLayer);
+d.groups.forEach(g=>{groups.append(el('rect',{x:g[2],y:g[3],width:g[4],height:g[5],rx:12,class:'group'}));groups.append(el('text',{x:g[2]+16,y:g[3]+22,class:'group-title'},g[1]))});
+const lookup=new Map(d.nodes.map(n=>[n[0],n])),W=310,H=124;
+function edgePath(a,b){const dx=(b[3]+W/2)-(a[3]+W/2),dy=(b[4]+H/2)-(a[4]+H/2);if(Math.abs(dx)>=Math.abs(dy)){const f=dx>=0,ax=a[3]+(f?W:0),ay=a[4]+H/2,bx=b[3]+(f?0:W),by=b[4]+H/2;if(Math.abs(ay-by)<34)return `M ${ax} ${ay} L ${bx} ${by}`;const m=(ax+bx)/2;return `M ${ax} ${ay} L ${m} ${ay} L ${m} ${by} L ${bx} ${by}`}const f=dy>=0,ax=a[3]+W/2,ay=a[4]+(f?H:0),bx=b[3]+W/2,by=b[4]+(f?0:H);if(Math.abs(ax-bx)<45)return `M ${ax} ${ay} L ${bx} ${by}`;const m=(ay+by)/2;return `M ${ax} ${ay} L ${ax} ${m} L ${bx} ${m} L ${bx} ${by}`}
+d.edges.forEach(([from,to,label,style])=>{const a=lookup.get(from),b=lookup.get(to);if(!a||!b)return;edges.append(el('path',{d:edgePath(a,b),class:'edge '+(style||'')}));if(label){const x=(a[3]+b[3]+W)/2,y=(a[4]+b[4]+H)/2-5;edges.append(el('text',{x,y,class:'edge-label','text-anchor':'middle'},label))}});
+const tip=document.getElementById('tip');function showTip(n,e){tip.innerHTML=`<strong>${n[1]}</strong>${n[2]}<br><small>${n[6]||''}</small>`;tip.style.display='block';if(e)moveTip(e)}function moveTip(e){tip.style.left=Math.min(e.clientX+14,innerWidth-370)+'px';tip.style.top=Math.min(e.clientY+14,innerHeight-110)+'px'}function hideTip(){tip.style.display='none'}
+d.nodes.forEach(n=>{const g=el('g',{class:'node '+n[5],transform:`translate(${n[3]},${n[4]})`,tabindex:'0',role:'button','aria-label':`${n[1]}. ${n[2]}. ${n[6]||''}`});g.append(el('rect',{width:W,height:H,rx:9}));g.append(el('text',{x:12,y:21,class:'title'},n[1]));const wrap=(s,max)=>{const words=s.split(/\s+/),out=[];let line='';for(const w of words){if(line&&(line+' '+w).length>max){out.push(line);line=w}else line+=(line?' ':'')+w}if(line)out.push(line);return out};wrap(n[2],43).slice(0,2).forEach((s,i)=>g.append(el('text',{x:12,y:43+i*12,class:'sub'},s)));wrap(n[6]||'',47).slice(0,4).forEach((s,i)=>g.append(el('text',{x:12,y:70+i*12,class:'detail'},s)));g.addEventListener('mouseenter',e=>showTip(n,e));g.addEventListener('mousemove',moveTip);g.addEventListener('mouseleave',hideTip);g.addEventListener('focus',()=>showTip(n));g.addEventListener('blur',hideTip);g.addEventListener('click',e=>showTip(n,e));nodesLayer.append(g)});
+let active={z:1,x:0,y:0};function fit(){active={z:1,x:0,y:0};apply()}function apply(){const board=document.querySelector('.board'),s=Math.min(board.clientWidth/d.w,board.clientHeight/d.h)*active.z,tx=(board.clientWidth-d.w*s)/2+active.x,ty=(board.clientHeight-d.h*s)/2+active.y;svg.setAttribute('viewBox',`${-tx/s} ${-ty/s} ${board.clientWidth/s} ${board.clientHeight/s}`);document.getElementById('scale').textContent=`${Math.round(active.z*100)}%`}document.getElementById('plus').onclick=()=>{active.z=Math.min(3,active.z*1.2);apply()};document.getElementById('minus').onclick=()=>{active.z=Math.max(.45,active.z/1.2);apply()};document.getElementById('fit').onclick=fit;window.addEventListener('resize',apply);const board=document.querySelector('.board');let drag=null;board.addEventListener('pointerdown',e=>{if(e.target.closest('.node'))return;drag={x:e.clientX,y:e.clientY,ox:active.x,oy:active.y};board.setPointerCapture(e.pointerId);svg.classList.add('dragging')});board.addEventListener('pointermove',e=>{if(!drag)return;active.x=drag.ox+e.clientX-drag.x;active.y=drag.oy+e.clientY-drag.y;apply()});board.addEventListener('pointerup',()=>{drag=null;svg.classList.remove('dragging')});board.addEventListener('wheel',e=>{e.preventDefault();active.z=Math.max(.45,Math.min(3,active.z*(e.deltaY<0?1.1:1/1.1)));apply()},{passive:false});apply();
+</script></body></html>
